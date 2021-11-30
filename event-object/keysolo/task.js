@@ -24,6 +24,18 @@ class Game {
       В случае правильного ввода слова вызываем this.success()
       При неправильном вводе символа - this.fail();
      */
+    document.addEventListener("keyup", (e) => {
+      console.log(e);
+      if ( e.key === "Meta" ) {
+        return;
+      }
+
+      if (e.key === this.currentSymbol.textContent) {
+        this.success();
+      } else {
+        this.fail();
+      }
+    });
   }
 
   success() {
@@ -50,18 +62,18 @@ class Game {
 
   setNewWord() {
     const word = this.getWord();
-
     this.renderWord(word);
+    this.setTimer(word.length);
   }
 
   getWord() {
     const words = [
         'bob',
-        'awesome',
+        'awesome боб',
         'netology',
         'hello',
         'kitty',
-        'rock',
+        'rock детка',
         'youtube',
         'popcorn',
         'cinema',
@@ -83,6 +95,23 @@ class Game {
     this.wordElement.innerHTML = html;
 
     this.currentSymbol = this.wordElement.querySelector('.symbol_current');
+  }
+
+  setTimer(time) {
+    clearTimeout(this.timerId);
+    this.timeout = time;
+    document.querySelector(".time").textContent = time;
+    this.timerId = setTimeout(() => this.timerCallback(), 1000);
+  }
+
+  timerCallback() {
+    this.timeout--;
+    document.querySelector(".time").textContent = this.timeout;
+    if (this.timeout > 0) {
+      this.timerId = setTimeout(() => this.timerCallback(), 1000);
+    } else {
+      this.fail();
+    }
   }
 }
 
