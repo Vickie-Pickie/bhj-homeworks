@@ -45,3 +45,11 @@
   display: block;
   text-align: center;
 }
+
+.hidden {
+    display: none;
+}
+
+.error {
+    color: red;
+}
